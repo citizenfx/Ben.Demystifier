@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,6 +80,7 @@ namespace System.Diagnostics
             }
         }
 
+        [SecuritySafeCritical]
         public static ResolvedMethod GetMethodDisplayString(MethodBase originMethod)
         {
             // Special case: no method available
@@ -241,6 +243,7 @@ namespace System.Diagnostics
             return methodDisplayInfo;
         }
 
+        [SecuritySafeCritical]
         private static bool TryResolveGeneratedName(ref MethodBase method, out Type type, out string methodName, out string subMethodName, out GeneratedNameKind kind, out int? ordinal)
         {
             kind = GeneratedNameKind.None;
@@ -327,6 +330,7 @@ namespace System.Diagnostics
             return false;
         }
 
+        [SecuritySafeCritical]
         private static bool TryResolveSourceMethod(IEnumerable<MethodBase> candidateMethods, GeneratedNameKind kind, string matchHint, ref MethodBase method, ref Type type, out int? ordinal)
         {
             ordinal = null;
@@ -381,6 +385,7 @@ namespace System.Diagnostics
             return false;
         }
 
+        [SecuritySafeCritical]
         private static void GetOrdinal(MethodBase method, ref int? ordinal)
         {
             var lamdaStart = method.Name.IndexOf((char)GeneratedNameKind.LambdaMethod + "__") + 3;
@@ -425,6 +430,7 @@ namespace System.Diagnostics
             }
         }
 
+        [SecuritySafeCritical]
         static string GetMatchHint(GeneratedNameKind kind, MethodBase method)
         {
             var methodName = method.Name;
@@ -447,6 +453,7 @@ namespace System.Diagnostics
         // generated names, where [middle] and [__[suffix]] are optional,
         // and where c is a single character in [1-9a-z]
         // (csharp\LanguageAnalysis\LIB\SpecialName.cpp).
+        [SecuritySafeCritical]
         internal static bool TryParseGeneratedName(
             string name,
             out GeneratedNameKind kind,
@@ -536,6 +543,7 @@ namespace System.Diagnostics
             return string.Empty;
         }
 
+        [SecuritySafeCritical]
         private static ResolvedParameter GetParameter(ParameterInfo parameter)
         {
             var parameterType = parameter.ParameterType;

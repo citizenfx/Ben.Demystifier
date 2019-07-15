@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Generic.Enumerable;
 using System.IO;
+using System.Security;
 using System.Text;
 
 namespace System.Diagnostics
@@ -14,6 +15,12 @@ namespace System.Diagnostics
         public static EnhancedStackTrace Current() => new EnhancedStackTrace(new StackTrace(1 /* skip this one frame */, true));
 
         private readonly List<EnhancedStackFrame> _frames;
+
+        [SecuritySafeCritical]
+        public EnhancedStackTrace()
+        {
+
+        }
 
         // Summary:
         //     Initializes a new instance of the System.Diagnostics.StackTrace class using the
@@ -26,6 +33,7 @@ namespace System.Diagnostics
         // Exceptions:
         //   T:System.ArgumentNullException:
         //     The parameter e is null.
+        [SecuritySafeCritical]
         public EnhancedStackTrace(Exception e)
         {
             if (e == null)
